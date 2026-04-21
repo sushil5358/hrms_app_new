@@ -12,6 +12,7 @@ class LoginController extends GetxController {
   ApiServices apiServices = ApiServices();
   TextEditingController email = TextEditingController();
   String userId = "";
+  String comapnyId = "";
 
   // Add loading state
   var isLoading = false.obs;
@@ -38,12 +39,14 @@ class LoginController extends GetxController {
         if (extractedData["status"] == "true" || extractedData["status"] == true) {
 
           userId = extractedData["user"]['user_id'].toString();
+          comapnyId = extractedData["user"]['company_id'].toString();
           String email = extractedData["user"]['email'].toString();
           print("============> user id :- $userId");
           print("============> user email :- $email");
 
           SharedPreferences sp = await SharedPreferences.getInstance();
           sp.setString("user_id", userId);
+          sp.setString('company_id', comapnyId);
           await sp.setBool("isLoggedIn", true);
 
           ScaffoldMessenger.of(context).showSnackBar(

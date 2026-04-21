@@ -45,6 +45,8 @@ class ApiServices {
             "email": email, // If the server says "email required", ensure this key matches exactly what PHP looks for
           }
       );
+
+      print('login $uri');
       return response;
     } catch (e) {
       rethrow;
@@ -440,9 +442,9 @@ Future<http.Response> Reschedulevisit ({
     return response;
   }
 
-  Future<http.Response> getattendanceRules(String userId)async{
+  Future<http.Response> getattendanceRules(String userId,String companyId)async{
     http.Response response;
-    final uri = Uri.parse(url + 'api_attendance_status.php?use_id=$userId');
+    final uri = Uri.parse(url + 'api_attendance_status.php?action=rules&company_id=$companyId');
     print('get attendance rules $uri');
     response = await http.get(uri);
     return response;

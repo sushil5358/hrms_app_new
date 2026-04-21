@@ -198,6 +198,7 @@ class AttensanceController extends GetxController {
   RxString status = ''.obs;
   RxString time = ''.obs;
   String userId = "";
+  String companyId = "";
   var Attsdancehistorylist = [].obs;
   RxInt companyDistance = 0.obs;
   RxList rulesList = <Rulesmodel>[].obs;
@@ -230,7 +231,10 @@ class AttensanceController extends GetxController {
   getID() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     userId = await sp.getString("user_id") ?? "";
+    companyId = await sp.getString('company_id') ?? "";
+
     print("user id ===> ${userId}");
+    print("comapnyid ===> ${companyId}");
 
     fetchcompanylocation();
     getcompanyDistance();
@@ -527,7 +531,7 @@ class AttensanceController extends GetxController {
 
   Future<void> getattendanceRules()async{
     http.Response response;
-    response = await apiServices.getattendanceRules(userId);
+    response = await apiServices.getattendanceRules(userId,companyId);
     if(response.statusCode == 200){
       var extractdata = jsonDecode(response.body);
 
